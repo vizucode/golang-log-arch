@@ -1,0 +1,53 @@
+{
+    "time": "2024-06-17T15:24:28.362892+07:00",
+    "level": "ERROR",
+    "msg": "data",
+    "metadata": {
+        "environtment": "developement"
+    },
+    "data": {
+        "exec_time": 0.000345,
+        "log_message": [
+            {
+                "file": "slog-golang/main.go:17",
+                "level": "error",
+                "message": "[Watdehel!! Error Ternyata]"
+            }
+        ],
+        "outgoing_response": {
+            "endpoint": "/api/v1/users",
+            "host": "localhost:8080",
+            "response_message": "[Watdehel!! Error Ternyata]",
+            "response_method": "GET",
+            "status_code": 500,
+            "user_token": "signature"
+        },
+        "request_id": "319dfa22-c3ed-4964-9c26-d7b5af709815",
+        "service_id": "service-id",
+        "service_name": "service-name",
+        "signature": "signature",
+        "third_party_service": [
+            {
+                "executed_time": 0.000051,
+                "method": "GET",
+                "request_body": "body",
+                "request_header": "header",
+                "request_time": "2024-06-17T15:24:28.362162+07:00",
+                "response": "response",
+                "service_id": "1",
+                "service_name": "service-name",
+                "status_code": 200,
+                "url": "https://google.com"
+            }
+        ],
+        "timestamp": "2024-06-17T15:24:28.361929+07:00",
+        "upcoming_request": {
+            "endpoint": "/api/v1/users",
+            "host": "localhost:8080",
+            "request_body": "body",
+            "request_headers": "header",
+            "request_method": "GET"
+        },
+        "user_id": "user-id"
+    }
+}
