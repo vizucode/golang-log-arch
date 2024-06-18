@@ -3,6 +3,7 @@ package logger
 import (
 	"context"
 	"encoding/json"
+	"io"
 	"log"
 	"log/slog"
 	"os"
@@ -18,13 +19,13 @@ Usage: SetLogger()
 set APP_ENVIRONTMENT to "developement" for activate debug level
 */
 
-func Slog2Json() {
+func Slog2Json(file io.Writer) {
 	levelDefault := slog.LevelInfo
 	if strings.EqualFold("developement", os.Getenv("APP_ENVIRONTMENT")) {
 		levelDefault = slog.LevelDebug
 	}
 
-	slogWithJsonHandler := slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{
+	slogWithJsonHandler := slog.NewJSONHandler(file, &slog.HandlerOptions{
 		Level: levelDefault,
 	}).WithAttrs([]slog.Attr{
 		slog.Group("metadata", slog.String("environtment", os.Getenv("APP_ENVIRONTMENT"))),
@@ -112,16 +113,14 @@ func (l *LogEntry) Finalize(ctx context.Context) {
 	}
 
 	// check status code
-	var defaultLevel = slog.LevelInfo
 	switch l.OutgoingResponse.StatusCode {
 	case 400:
-		defaultLevel = slog.LevelWarn
+		slog.WarnContext(ctx, "data", slog.Any("data", l.serialize()))
 	case 500:
-		defaultLevel = slog.LevelError
+		slog.ErrorContext(ctx, "data", slog.Any("data", l.serialize()))
+	default:
+		slog.InfoContext(ctx, "data", slog.Any("data", l.serialize()))
 	}
-
-	// set custom log storage
-	slog.Log(ctx, defaultLevel, "data", slog.Any("data", l.serialize()))
 }
 
 func (l *LogEntry) serialize() (resp map[string]interface{}) {
